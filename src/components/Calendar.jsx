@@ -128,14 +128,18 @@ export const Calendar = (props) => {
     doWeekArray(week2, week3);
     doWeekArray(week3, week4);
 
-    for(let i = 0; i < 7; i += 1) {
-        if ((week4[6] + i) < days) {
-            week5[i] = week4[6] + 1 + i;
-        } else {
-            week5[i] = i + 1;
+    (function doWeek5Array() {
+        let itemFilled = 0;
+        for(let i = 0; i < 7; i += 1) {
+            if ((week4[6] + i) < days) {
+                week5[i] = week4[6] + 1 + i;
+            } else {
+                week5[i] = itemFilled + 1;
+                itemFilled += 1;
+            }
         }
-    }
-
+    })();
+    
     return (
       <div className="ui-datepicker">
         <div className="ui-datepicker-material-header">
@@ -174,30 +178,30 @@ export const Calendar = (props) => {
             </thead>
             <tbody>
                 <tr>
-                    {week1.map(r => (r > 7 ? <td className="ui-datepicker-other-month">{r}</td> : 
-                    r !== date.getDate() ? <td>{r}</td> : 
-                    <td className="ui-datepicker-today">{r}</td>
+                    {week1.map(r => (r > 7 ? <td key={r} className="ui-datepicker-other-month">{r}</td> : 
+                    r !== date.getDate() ? <td key={r}>{r}</td> : 
+                    <td key={r} className="ui-datepicker-today">{r}</td>
                     ))}
                 </tr>
                 <tr>
-                    {week2.map(r => (r !== date.getDate() ? <td>{r}</td> : 
-                        <td className="ui-datepicker-today">{r}</td>
+                    {week2.map(r => (r !== date.getDate() ? <td key={r}>{r}</td> : 
+                        <td key={r} className="ui-datepicker-today">{r}</td>
                     ))}
                 </tr>
                 <tr>
-                    {week3.map(r => (r !== date.getDate() ? <td>{r}</td> : 
-                        <td className="ui-datepicker-today">{r}</td>
+                    {week3.map(r => (r !== date.getDate() ? <td key={r}>{r}</td> : 
+                        <td key={r} className="ui-datepicker-today">{r}</td>
                     ))}
                 </tr>
                 <tr>
-                    {week4.map(r => (r !== date.getDate() ? <td>{r}</td> : 
-                        <td className="ui-datepicker-today">{r}</td>
+                    {week4.map(r => (r !== date.getDate() ? <td key={r}>{r}</td> : 
+                        <td key={r} className="ui-datepicker-today">{r}</td>
                     ))}
                 </tr>
                 <tr>
-                    {week5.map(r => (r < 8 ? <td className="ui-datepicker-other-month">{r}</td> : 
-                    r !== date.getDate() ? <td>{r}</td> : 
-                    <td className="ui-datepicker-today">{r}</td>
+                    {week5.map(r => (r < 8 ? <td key={r} className="ui-datepicker-other-month">{r}</td> : 
+                    r !== date.getDate() ? <td key={r}>{r}</td> : 
+                    <td key={r} className="ui-datepicker-today">{r}</td>
                     ))}
                 </tr>
             </tbody>
